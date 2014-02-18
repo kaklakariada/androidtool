@@ -1,9 +1,9 @@
 package org.chris.android.tool.mobiledata;
 
+import org.chris.android.tool.R;
+
 import android.telephony.TelephonyManager;
 import android.util.SparseArray;
-
-import org.chris.android.tool.R;
 
 public enum DataConnectionState {
 
@@ -11,9 +11,9 @@ public enum DataConnectionState {
             TelephonyManager.DATA_CONNECTED, R.string.mobile_data_state_connected, true), CONNECTING(
             TelephonyManager.DATA_CONNECTING, R.string.mobile_data_state_connecting, true), SUSPENDED(
             TelephonyManager.DATA_SUSPENDED, R.string.mobile_data_state_suspended, true);
-    private int state;
+    private final int state;
     private final static SparseArray<DataConnectionState> states = new SparseArray<DataConnectionState>();
-    private boolean connected;
+    private final boolean connected;
     private final int labelTextId;
 
     static {
@@ -34,10 +34,6 @@ public enum DataConnectionState {
 
     public boolean isConnected() {
         return connected;
-    }
-
-    public void setConnected(boolean connected) {
-        this.connected = connected;
     }
 
     public int getLabelTextId() {

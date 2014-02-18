@@ -13,7 +13,7 @@ public enum DataConnectionNetworkType {
             TelephonyManager.NETWORK_TYPE_HSPAP), HSUPA(TelephonyManager.NETWORK_TYPE_HSUPA), IDEN(
             TelephonyManager.NETWORK_TYPE_IDEN), LTE(TelephonyManager.NETWORK_TYPE_LTE), UMTS(
             TelephonyManager.NETWORK_TYPE_UMTS), UNKNOWN(TelephonyManager.NETWORK_TYPE_UNKNOWN);
-    private int state;
+    private final int state;
     private final static SparseArray<DataConnectionNetworkType> states = new SparseArray<DataConnectionNetworkType>();
 
     static {
