@@ -34,7 +34,7 @@
         </activity>
         <activity
             android:name="org.chris.android.tool.nfc.NfcActivity"
-            android:label="@string/nfc_reader" >
+            android:label="@string/title_activity_nfc" >
             android:parentActivityName="org.chris.android.tool.MainActivity" >            
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
