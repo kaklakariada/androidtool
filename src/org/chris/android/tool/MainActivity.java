@@ -4,6 +4,7 @@ import org.chris.android.tool.mobiledata.DataConnectionNetworkType;
 import org.chris.android.tool.mobiledata.DataConnectionState;
 import org.chris.android.tool.mobiledata.MobileDataHelper;
 import org.chris.android.tool.mobiledata.MobileDataHelper.DataConnectionStateListener;
+import org.chris.android.tool.service.WifiService;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -15,23 +16,35 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import org.chris.android.tool.R;
-
 public class MainActivity extends Activity {
 
     private static final String TAG = "main";
     private TorchHelper torchHelper;
     private MobileDataHelper mobileDataHelper;
+    private WifiService wifiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         torchHelper = TorchHelper.create(getApplicationContext(), (SurfaceView) findViewById(R.id.camera_preview));
         mobileDataHelper = new MobileDataHelper(getApplicationContext());
+        wifiService = new WifiService(getApplicationContext());
+
         setupTorchSwitch();
         setupMobileDataSwitch();
+        setupWifiSwitch();
+    }
+
+    private void setupWifiSwitch() {
+        Switch wifiSwitch = (Switch) findViewById(R.id.wifi_switch);
+        wifiSwitch.setChecked(wifiService.isWifiEnabled());
+        wifiSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                wifiService.setWifiEnabled(isChecked);
+            }
+        });
     }
 
     private void setupMobileDataSwitch() {

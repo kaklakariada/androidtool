@@ -4,8 +4,7 @@
     <string name="app_name">Android Tool</string>
     <string name="torch">Flashlight</string>
     <string name="torch_hint">Switch flashlight on/off</string>
-    <string name="permdesc_flashlight">We need the permission to enable the flashlight</string>
-    <string name="permlab_flashlight">Enable flashlight</string>
+    
     <string name="mobile_data">Mobile data usage</string>
     <string name="mobile_data_hint">Switch mobile data usage on/off</string>
     <string name="mobile_data_state">State:</string>
@@ -13,7 +12,15 @@
     <string name="mobile_data_state_disconnected">disconnected</string>
     <string name="mobile_data_state_connecting">connecting</string>
     <string name="mobile_data_state_suspended">suspended</string>
+    
     <string name="title_activity_nfc">NfcActivity</string>
+    
     <string name="wifi">Wifi</string>
+    <string name="wifi_state">State:</string>
+    <string name="wifi_state_enabling">enabling</string>
+    <string name="wifi_state_enabled">enabled</string>
+    <string name="wifi_state_disabling">disabling</string>
+    <string name="wifi_state_disabled">disabled</string>
+    <string name="wifi_state_unknown">unknown</string>
 
 </resources>
