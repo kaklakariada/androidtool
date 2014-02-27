@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="14"
+        android:minSdkVersion="19"
         android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.CAMERA" />
@@ -37,7 +37,7 @@
         <activity
             android:name="org.chris.android.tool.nfc.NfcActivity"
             android:label="@string/title_activity_nfc" >
-            android:parentActivityName="org.chris.android.tool.MainActivity" >            
+            android:parentActivityName="org.chris.android.tool.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.chris.android.tool.MainActivity" />
@@ -52,6 +52,16 @@
             <meta-data
                 android:name="android.nfc.action.TECH_DISCOVERED"
                 android:resource="@xml/nfc_tech_list" />
+        </activity>
+        <activity
+            android:name="org.chris.android.tool.sensor.SensorListActivity"
+            android:label="@string/title_activity_sensors" >
+            android:parentActivityName="org.chris.android.tool.MainActivity" >        
+        </activity>
+        <activity
+            android:name="org.chris.android.tool.sensor.SensorDetailActivity"
+            android:label="@string/title_activity_sensor_detail"
+            android:parentActivityName="org.chris.android.tool.sensor.SensorListActivity" >
         </activity>
     </application>
 

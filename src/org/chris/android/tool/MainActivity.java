@@ -4,13 +4,19 @@ import org.chris.android.tool.mobiledata.DataConnectionNetworkType;
 import org.chris.android.tool.mobiledata.DataConnectionState;
 import org.chris.android.tool.mobiledata.MobileDataHelper;
 import org.chris.android.tool.mobiledata.MobileDataHelper.DataConnectionStateListener;
+import org.chris.android.tool.sensor.SensorListActivity;
 import org.chris.android.tool.service.WifiService;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.SurfaceView;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Switch;
@@ -27,13 +33,26 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        torchHelper = TorchHelper.create(getApplicationContext(), (SurfaceView) findViewById(R.id.camera_preview));
-        mobileDataHelper = new MobileDataHelper(getApplicationContext());
-        wifiService = new WifiService(getApplicationContext());
+        Context applicationContext = getApplicationContext();
+        torchHelper = TorchHelper.create(applicationContext, (SurfaceView) findViewById(R.id.camera_preview));
+        mobileDataHelper = new MobileDataHelper(applicationContext);
+        wifiService = new WifiService(applicationContext);
 
         setupTorchSwitch();
         setupMobileDataSwitch();
         setupWifiSwitch();
+        setupSensorsButton();
+    }
+
+    private void setupSensorsButton() {
+        Button sensorButton = (Button) findViewById(R.id.sensor_button);
+        sensorButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sensorIntent = new Intent(MainActivity.this, SensorListActivity.class);
+                startActivity(sensorIntent);
+            }
+        });
     }
 
     private void setupWifiSwitch() {

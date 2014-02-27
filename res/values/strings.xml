@@ -4,7 +4,6 @@
     <string name="app_name">Android Tool</string>
     <string name="torch">Flashlight</string>
     <string name="torch_hint">Switch flashlight on/off</string>
-    
     <string name="mobile_data">Mobile data usage</string>
     <string name="mobile_data_hint">Switch mobile data usage on/off</string>
     <string name="mobile_data_state">State:</string>
@@ -12,9 +11,7 @@
     <string name="mobile_data_state_disconnected">disconnected</string>
     <string name="mobile_data_state_connecting">connecting</string>
     <string name="mobile_data_state_suspended">suspended</string>
-    
     <string name="title_activity_nfc">NfcActivity</string>
-    
     <string name="wifi">Wifi</string>
     <string name="wifi_state">State:</string>
     <string name="wifi_state_enabling">enabling</string>
@@ -22,5 +19,19 @@
     <string name="wifi_state_disabling">disabling</string>
     <string name="wifi_state_disabled">disabled</string>
     <string name="wifi_state_unknown">unknown</string>
+    <string name="sensors">Sensors</string>
+    <string name="sensor_description">Type: %1$s\nVendor: %2$s\nPower: %3$.1f mA</string>
+    <string name="title_activity_sensors">Sensors</string>
+    <string name="title_activity_sensor_detail">SensorDetailActivity</string>
+    <string name="action_settings">Settings</string>
 
+    <string name="sensor_name">Name: %s</string>
+    <string name="sensor_vendor">Vendor: %s</string>
+    <string name="sensor_version">Version: %d</string>
+    <string name="sensor_power">Power: %.1f mA</string>
+    <string name="sensor_type">Type: %1$s (%2$d)</string>
+    <string name="sensor_batch_info">Fifo max event count: %1$d, reserved event count: %2$d</string>
+    <string name="sensor_delay">Min delay: %d µs</string>
+    <string name="sensor_range">Resolution: %1$.5f, Max Range: %2$.3f</string>
+    
 </resources>
