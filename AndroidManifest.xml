@@ -55,8 +55,9 @@
         </activity>
         <activity
             android:name="org.chris.android.tool.sensor.SensorListActivity"
-            android:label="@string/title_activity_sensors" >
-            android:parentActivityName="org.chris.android.tool.MainActivity" >        
+            android:label="@string/title_activity_sensors"
+            android:launchMode="singleTop"
+            android:parentActivityName="org.chris.android.tool.MainActivity" >
         </activity>
         <activity
             android:name="org.chris.android.tool.sensor.SensorDetailActivity"
