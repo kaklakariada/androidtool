@@ -33,5 +33,5 @@
     <string name="sensor_batch_info">Fifo max event count: %1$d, reserved event count: %2$d</string>
     <string name="sensor_delay">Min delay: %d µs</string>
     <string name="sensor_range">Resolution: %1$.5f, Max Range: %2$.3f</string>
-    
+
 </resources>
