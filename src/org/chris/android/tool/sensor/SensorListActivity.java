@@ -1,28 +1,29 @@
 package org.chris.android.tool.sensor;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.chris.android.tool.R;
-
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import org.chris.android.tool.R;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class SensorListActivity extends ListActivity {
 
-    private static final String TAG = "sensor";
+    private static final Logger LOG = LoggerFactory.getLogger(SensorListActivity.class);
 
     private static final String COLUMN_SENSOR_NAME = "sensorName";
     private static final String COLUMN_SENSOR_TYPE = "sensorType";
@@ -37,7 +38,7 @@ public class SensorListActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensorList = sensorManager.getSensorList(Sensor.TYPE_ALL);
-        Log.d(TAG, "Found " + sensorList.size() + " sensors");
+        LOG.debug("Found " + sensorList.size() + " sensors");
         setListAdapter(createListAdapter(sensorList));
     }
 
@@ -80,7 +81,7 @@ public class SensorListActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         Sensor sensor = sensorList.get(position);
         if (sensor == null) {
-            Log.e(TAG, "Did not find selected sensor");
+            LOG.error("Did not find selected sensor");
             return;
         }
         displaySensor(sensor);

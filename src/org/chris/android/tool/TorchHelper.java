@@ -1,19 +1,21 @@
 package org.chris.android.tool;
 
-import java.io.IOException;
-
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+
 public class TorchHelper {
 
-    private static final String TAG = "torch";
+    private static final Logger LOG = LoggerFactory.getLogger(TorchHelper.class);
     private Camera camera;
     private final Context context;
 
@@ -30,30 +32,29 @@ public class TorchHelper {
     }
 
     public boolean isFlashAvailable() {
-        boolean flashAvailable = hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
-        return flashAvailable;
+        return hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
     }
 
     private boolean hasSystemFeature(String feature) {
         boolean hasSystemFeature = context.getPackageManager().hasSystemFeature(feature);
-        Log.d(TAG, "System feature " + feature + " available: " + hasSystemFeature);
+        LOG.debug("System feature {} available: {}", feature, hasSystemFeature);
         return hasSystemFeature;
     }
 
     public boolean isTorchActive() {
         if (cameraNotAvailable()) {
-            Log.w(TAG, "Camera not available");
+            LOG.warn("Camera not available");
             return false;
         }
         String flashMode = camera.getParameters().getFlashMode();
         boolean torchActive = Parameters.FLASH_MODE_TORCH.equals(flashMode);
-        Log.d(TAG, "Current flash mode: " + flashMode + ", torch active = " + torchActive);
+        LOG.debug("Current flash mode: {}, torch active = {}", flashMode, torchActive);
         return torchActive;
     }
 
     public void switchTorchOn() {
         if (cameraNotAvailable()) {
-            Log.w(TAG, "Camera not available");
+            LOG.warn("Camera not available");
             return;
         }
         Parameters p = camera.getParameters();
@@ -64,7 +65,7 @@ public class TorchHelper {
 
     public void switchTorchOff() {
         if (cameraNotAvailable()) {
-            Log.w(TAG, "Camera not available");
+            LOG.warn("Camera not available");
             return;
         }
         Parameters p = camera.getParameters();
@@ -78,7 +79,7 @@ public class TorchHelper {
     }
 
     public void destroy() {
-        Log.d(TAG, "Destroying torch helper: release camera");
+        LOG.debug("Destroying torch helper: release camera");
         camera.release();
         camera = null;
     }
@@ -99,7 +100,7 @@ public class TorchHelper {
             try {
                 camera.setPreviewDisplay(holder);
             } catch (IOException e) {
-                Log.e(TAG, "Error setting preview display", e);
+                LOG.error("Error setting preview display", e);
             }
         }
 

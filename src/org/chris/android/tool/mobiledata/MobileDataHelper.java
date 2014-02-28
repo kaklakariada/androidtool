@@ -1,19 +1,21 @@
 package org.chris.android.tool.mobiledata;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.telephony.PhoneStateListener;
-import android.telephony.TelephonyManager;
-import android.util.Log;
-
 public class MobileDataHelper {
 
-    private static final String TAG = "main";
+    private static final Logger LOG = LoggerFactory.getLogger(MobileDataHelper.class);
     private final Context context;
     private final TelephonyManager telephonyService;
 
@@ -35,15 +37,15 @@ public class MobileDataHelper {
     public boolean isMobileDataEnabled() {
         final Object iConnectivityManager = getConnectivityManager();
         boolean mobileDataEnabled = (Boolean) invokePrivateMethod(iConnectivityManager, "getMobileDataEnabled");
-        Log.d(TAG, "Mobile data enabled: " + mobileDataEnabled);
+        LOG.debug("Mobile data enabled: " + mobileDataEnabled);
         return mobileDataEnabled;
     }
 
     public void setMobileDataEnabled(boolean enabled) {
-        Log.i(TAG, "Set mobile data enabled to " + enabled);
+        LOG.info("Set mobile data enabled to {}", enabled);
         final Object iConnectivityManager = getConnectivityManager();
         invokePrivateMethod(iConnectivityManager, "setMobileDataEnabled", new Class<?>[] { Boolean.TYPE }, enabled);
-        Log.d(TAG, "success");
+        LOG.debug("success");
     }
 
     private Object getConnectivityManager() {
@@ -78,7 +80,7 @@ public class MobileDataHelper {
             final Method method = target.getClass().getDeclaredMethod(methodName, argTypes);
             method.setAccessible(true);
             Object returnValue = method.invoke(target, args);
-            Log.d(TAG, "Got return value " + returnValue + " from method call " + methodName);
+            LOG.debug("Got return value " + returnValue + " from method call " + methodName);
             return returnValue;
         } catch (NoSuchMethodException e) {
             throw new RuntimeException("Error invoking method " + methodName + " with arguments "
@@ -100,8 +102,8 @@ public class MobileDataHelper {
         for (int i = 0; i < args.length; i++) {
             argTypes[i] = args[i].getClass();
         }
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
-            Log.d(TAG, "Arguments " + Arrays.toString(args) + " have type " + Arrays.toString(argTypes));
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Arguments {} have type {}", Arrays.toString(args), Arrays.toString(argTypes));
         }
         return argTypes;
     }

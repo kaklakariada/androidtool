@@ -1,17 +1,9 @@
 package org.chris.android.tool;
 
-import org.chris.android.tool.mobiledata.DataConnectionNetworkType;
-import org.chris.android.tool.mobiledata.DataConnectionState;
-import org.chris.android.tool.mobiledata.MobileDataHelper;
-import org.chris.android.tool.mobiledata.MobileDataHelper.DataConnectionStateListener;
-import org.chris.android.tool.sensor.SensorListActivity;
-import org.chris.android.tool.service.WifiService;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.SurfaceView;
 import android.view.View;
@@ -22,9 +14,18 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import org.chris.android.tool.mobiledata.DataConnectionNetworkType;
+import org.chris.android.tool.mobiledata.DataConnectionState;
+import org.chris.android.tool.mobiledata.MobileDataHelper;
+import org.chris.android.tool.mobiledata.MobileDataHelper.DataConnectionStateListener;
+import org.chris.android.tool.sensor.SensorListActivity;
+import org.chris.android.tool.service.WifiService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class MainActivity extends Activity {
 
-    private static final String TAG = "main";
+    private static final Logger LOG = LoggerFactory.getLogger(MainActivity.class);
     private TorchHelper torchHelper;
     private MobileDataHelper mobileDataHelper;
     private WifiService wifiService;
@@ -120,7 +121,7 @@ public class MainActivity extends Activity {
     }
 
     public void toggleTorch(boolean torchEnabled) {
-        Log.d(TAG, "Toggle torch, view: " + torchEnabled);
+        LOG.debug("Toggle torch, view: {}", torchEnabled);
 
         if (torchEnabled) {
             torchHelper.switchTorchOn();

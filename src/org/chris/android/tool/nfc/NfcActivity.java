@@ -1,9 +1,5 @@
 package org.chris.android.tool.nfc;
 
-import java.util.Arrays;
-
-import org.chris.android.tool.R;
-
 import android.app.Activity;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
@@ -11,14 +7,19 @@ import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import org.chris.android.tool.R;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Arrays;
+
 public class NfcActivity extends Activity {
 
-    private static final String TAG = "nfc";
+    private static final Logger LOG = LoggerFactory.getLogger(NfcActivity.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,7 @@ public class NfcActivity extends Activity {
         setContentView(R.layout.activity_nfc);
         // Show the Up button in the action bar.
         setupActionBar();
-        Log.d(TAG, "Creating nfc activity");
+        LOG.debug("Creating nfc activity");
     }
 
     /**
@@ -41,17 +42,17 @@ public class NfcActivity extends Activity {
         super.onResume();
         String message = "Got intent " + getIntent() + " with action " + getIntent().getAction();
         displayMessage(message);
-        Log.d(TAG, message);
+        LOG.debug(message);
         Bundle extras = getIntent().getExtras();
         for (String key : extras.keySet()) {
             Object value = extras.get(key);
-            Log.d(TAG, "Extra " + key + " (" + value.getClass().getName() + ") : " + value);
+            LOG.debug("Extra " + key + " (" + value.getClass().getName() + ") : " + value);
         }
         byte[] id = extras.getByteArray(NfcAdapter.EXTRA_ID);
-        Log.d(TAG, "Got id " + Arrays.toString(id));
+        LOG.debug("Got id " + Arrays.toString(id));
 
         Tag tag = (Tag) extras.get(NfcAdapter.EXTRA_TAG);
-        Log.d(TAG, "Tech list: " + Arrays.toString(tag.getTechList()));
+        LOG.debug("Tech list: " + Arrays.toString(tag.getTechList()));
 
         getIntent().getParcelableExtra(NfcAdapter.EXTRA_TAG);
         // nfcAdapter = NfcAdapter.getDefaultAdapter(getApplicationContext());
@@ -63,7 +64,7 @@ public class NfcActivity extends Activity {
                 for (int i = 0; i < rawMsgs.length; i++) {
                     msgs[i] = (NdefMessage) rawMsgs[i];
                     String msg = "Got nfc msg #" + i + ":" + msgs[i];
-                    Log.d(TAG, msg);
+                    LOG.debug(msg);
                     displayMessage(msg);
                 }
             }

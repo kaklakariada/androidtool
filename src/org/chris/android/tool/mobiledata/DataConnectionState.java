@@ -1,9 +1,9 @@
 package org.chris.android.tool.mobiledata;
 
-import org.chris.android.tool.R;
-
 import android.telephony.TelephonyManager;
 import android.util.SparseArray;
+
+import org.chris.android.tool.R;
 
 public enum DataConnectionState {
 
