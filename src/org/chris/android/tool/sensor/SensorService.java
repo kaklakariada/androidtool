@@ -38,7 +38,7 @@ public class SensorService {
 
         @Override
         public void onSensorChanged(SensorEvent event) {
-            Log.d(TAG, "Sensor " + event.sensor.getName() + " changed: " + Arrays.toString(event.values));
+            Log.d(TAG, event.sensor.getName() + ": " + Arrays.toString(event.values));
         }
     }
 

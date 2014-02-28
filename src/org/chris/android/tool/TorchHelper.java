@@ -65,7 +65,6 @@ public class TorchHelper {
     public void switchTorchOff() {
         if (cameraNotAvailable()) {
             Log.w(TAG, "Camera not available");
-
             return;
         }
         Parameters p = camera.getParameters();
@@ -97,7 +96,6 @@ public class TorchHelper {
 
         @Override
         public void surfaceCreated(SurfaceHolder holder) {
-            Log.d(TAG, "Surface created, holder: " + holder);
             try {
                 camera.setPreviewDisplay(holder);
             } catch (IOException e) {
@@ -107,7 +105,6 @@ public class TorchHelper {
 
         @Override
         public void surfaceDestroyed(SurfaceHolder holder) {
-            Log.d(TAG, "Surface destroyed");
             camera.stopPreview();
         }
     }

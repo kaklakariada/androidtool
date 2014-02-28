@@ -48,8 +48,7 @@ public class MobileDataHelper {
 
     private Object getConnectivityManager() {
         final ConnectivityManager conman = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        final Object iConnectivityManager = getPrivateFieldValue(conman, "mService");
-        return iConnectivityManager;
+        return getPrivateFieldValue(conman, "mService");
     }
 
     private Object getPrivateFieldValue(Object target, String fieldName) {
@@ -75,7 +74,6 @@ public class MobileDataHelper {
     }
 
     private Object invokePrivateMethod(Object target, String methodName, Class<?>[] argTypes, Object... args) {
-
         try {
             final Method method = target.getClass().getDeclaredMethod(methodName, argTypes);
             method.setAccessible(true);
