@@ -17,18 +17,20 @@ public class TorchHelper {
 
     private static final Logger LOG = LoggerFactory.getLogger(TorchHelper.class);
     private Camera camera;
+    private SurfaceHolder holder;
     private final Context context;
 
-    private TorchHelper(Context context, Camera camera) {
+    private TorchHelper(Context context, Camera camera, final SurfaceHolder holder) {
         this.context = context;
         this.camera = camera;
+        this.holder = holder;
+        this.holder.addCallback(new PreviewCallback());
     }
 
     public static TorchHelper create(Context context, SurfaceView preview) {
         final Camera camera = Camera.open();
         final SurfaceHolder holder = preview.getHolder();
-        holder.addCallback(new PreviewCallback(camera));
-        return new TorchHelper(context, camera);
+        return new TorchHelper(context, camera, holder);
     }
 
     public boolean isFlashAvailable() {
@@ -84,12 +86,7 @@ public class TorchHelper {
         camera = null;
     }
 
-    private static class PreviewCallback implements Callback {
-        private final Camera camera;
-
-        private PreviewCallback(Camera camera) {
-            this.camera = camera;
-        }
+    private class PreviewCallback implements Callback {
 
         @Override
         public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
@@ -97,6 +94,9 @@ public class TorchHelper {
 
         @Override
         public void surfaceCreated(SurfaceHolder holder) {
+            if (camera == null) {
+                return;
+            }
             try {
                 camera.setPreviewDisplay(holder);
             } catch (IOException e) {
@@ -106,6 +106,9 @@ public class TorchHelper {
 
         @Override
         public void surfaceDestroyed(SurfaceHolder holder) {
+            if (camera == null) {
+                return;
+            }
             camera.stopPreview();
         }
     }
