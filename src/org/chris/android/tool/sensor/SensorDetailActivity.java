@@ -6,17 +6,22 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GraphViewSeries;
+import com.jjoe64.graphview.LineGraphView;
 
 import org.chris.android.tool.R;
 
-import java.util.Arrays;
 import java.util.Locale;
 
 public class SensorDetailActivity extends Activity {
 
     public static final String EXTRA_SENSOR_TYPE = "EXTRA_SENSOR_TYPE";
     private SensorService sensorService;
+    private GraphViewSeries sensorSeries;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +36,29 @@ public class SensorDetailActivity extends Activity {
         }
         sensorService = new SensorService(getApplicationContext(), sensorType);
         updateSensorDetails();
+        registerSensorUpdateListener();
+        createSensorDataGraph();
+    }
+
+    private void createSensorDataGraph() {
+         sensorSeries = new GraphViewSeries(new GraphView.GraphViewData[0]);
+
+        GraphView graphView = new LineGraphView(this, "Sensor data");
+        graphView.addSeries(sensorSeries);
+        graphView.setScrollable(true);
+
+        LinearLayout layout = (LinearLayout) findViewById(R.id.sensor_graph);
+        layout.addView(graphView);
+    }
+
+    private void registerSensorUpdateListener() {
         sensorService.listenForSensorUpdates(new SensorService.SensorServiceListener() {
             @Override
             public void sensorUpdated(final int updateCount, final int accurracy, final long timestamp, final float[]
                     values) {
                 fillTextView(R.id.sensor_event_info, R.string.sensor_event_info, updateCount, accurracy);
                 fillTextView(R.id.sensor_last_value, formatSensorValues(values));
+                sensorSeries.appendData(new GraphView.GraphViewData(updateCount, values[0]), false, 500);
             }
         });
     }
