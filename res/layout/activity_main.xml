@@ -65,4 +65,11 @@
         android:text="@string/sensors"
         android:layout_marginTop="@dimen/activity_vertical_margin"/>
 
+    <Button
+        android:id="@+id/gps_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_activity_gps"
+        android:layout_marginTop="@dimen/activity_vertical_margin"/>
+
 </LinearLayout>

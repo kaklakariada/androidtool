@@ -5,7 +5,7 @@
           android:versionName="1.0">
 
     <uses-sdk
-        android:minSdkVersion="19"
+        android:minSdkVersion="16"
         android:targetSdkVersion="19"/>
 
     <uses-permission android:name="android.permission.CAMERA"/>
@@ -15,6 +15,7 @@
     <uses-permission android:name="android.permission.NFC"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <uses-feature android:name="android.hardware.camera"/>
     <uses-feature android:name="android.hardware.nfc"/>
@@ -64,6 +65,14 @@
             android:name="org.chris.android.tool.sensor.SensorDetailActivity"
             android:label="@string/title_activity_sensor_detail"
             android:parentActivityName="org.chris.android.tool.sensor.SensorListActivity">
+        </activity>
+        <activity
+            android:name="org.chris.android.tool.gps.GpsActivity"
+            android:label="@string/title_activity_gps"
+            android:parentActivityName="org.chris.android.tool.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.chris.android.tool.MainActivity"/>
         </activity>
     </application>
 

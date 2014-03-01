@@ -14,6 +14,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import org.chris.android.tool.gps.GpsActivity;
 import org.chris.android.tool.mobiledata.DataConnectionNetworkType;
 import org.chris.android.tool.mobiledata.DataConnectionState;
 import org.chris.android.tool.mobiledata.MobileDataHelper;
@@ -42,16 +43,18 @@ public class MainActivity extends Activity {
         setupTorchSwitch();
         setupMobileDataSwitch();
         setupWifiSwitch();
-        setupSensorsButton();
+
+        setupActivityButton(R.id.gps_button, GpsActivity.class);
+        setupActivityButton(R.id.sensor_button, SensorListActivity.class);
     }
 
-    private void setupSensorsButton() {
-        Button sensorButton = (Button) findViewById(R.id.sensor_button);
+    private void setupActivityButton(int buttonId, final Class<? extends  Activity> activityClass) {
+        Button sensorButton = (Button) findViewById(buttonId);
         sensorButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent sensorIntent = new Intent(MainActivity.this, SensorListActivity.class);
-                startActivity(sensorIntent);
+                Intent intent = new Intent(MainActivity.this, activityClass);
+                startActivity(intent);
             }
         });
     }
