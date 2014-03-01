@@ -40,24 +40,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:checked="false"
-        android:text="@string/wifi"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingRight="5dp"
-            android:text="@string/wifi_state"/>
-
-        <TextView
-            android:id="@+id/wifi_state"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+        android:text="@string/wifi"
+        android:layout_marginTop="@dimen/activity_vertical_margin"/>
 
     <Switch
         android:paddingTop="5dp"
@@ -66,7 +50,8 @@
         android:layout_height="wrap_content"
         android:checked="false"
         android:hint="@string/torch_hint"
-        android:text="@string/torch"/>
+        android:text="@string/torch"
+        android:layout_marginTop="@dimen/activity_vertical_margin"/>
 
     <SurfaceView
         android:id="@+id/camera_preview"
@@ -77,6 +62,7 @@
         android:id="@+id/sensor_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/sensors"/>
+        android:text="@string/sensors"
+        android:layout_marginTop="@dimen/activity_vertical_margin"/>
 
 </LinearLayout>

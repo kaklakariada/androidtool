@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import org.chris.android.tool.R;
 
+import java.util.Arrays;
+import java.util.Locale;
+
 public class SensorDetailActivity extends Activity {
 
     public static final String EXTRA_SENSOR_TYPE = "EXTRA_SENSOR_TYPE";
@@ -28,6 +31,23 @@ public class SensorDetailActivity extends Activity {
         }
         sensorService = new SensorService(getApplicationContext(), sensorType);
         updateSensorDetails();
+        sensorService.listenForSensorUpdates(new SensorService.SensorServiceListener() {
+            @Override
+            public void sensorUpdated(final int updateCount, final int accurracy, final long timestamp, final float[]
+                    values) {
+                fillTextView(R.id.sensor_event_info, R.string.sensor_event_info, updateCount, accurracy);
+                fillTextView(R.id.sensor_last_value, formatSensorValues(values));
+            }
+        });
+    }
+
+    private String formatSensorValues(final float[] values) {
+        StringBuffer b = new StringBuffer();
+        for (float value : values) {
+            b.append(String.format(Locale.getDefault(), "%1.5f", value));
+            b.append('\n');
+        }
+        return b.toString();
     }
 
     private void updateSensorDetails() {
@@ -45,8 +65,11 @@ public class SensorDetailActivity extends Activity {
     }
 
     private void fillTextView(int textViewId, int stringId, Object... formatArgs) {
+        fillTextView(textViewId, getString(stringId, formatArgs));
+    }
+    private void fillTextView(int textViewId, String value) {
         TextView text = (TextView) findViewById(textViewId);
-        text.setText(getString(stringId, formatArgs));
+        text.setText(value);
     }
 
     /**

@@ -13,7 +13,6 @@
     <string name="mobile_data_state_suspended">suspended</string>
     <string name="title_activity_nfc">NfcActivity</string>
     <string name="wifi">Wifi</string>
-    <string name="wifi_state">State:</string>
     <string name="wifi_state_enabling">enabling</string>
     <string name="wifi_state_enabled">enabled</string>
     <string name="wifi_state_disabling">disabling</string>
@@ -33,5 +32,6 @@
     <string name="sensor_batch_info">Fifo max event count: %1$d, reserved event count: %2$d</string>
     <string name="sensor_delay">Min delay: %d µs</string>
     <string name="sensor_range">Resolution: %1$.5f, Max Range: %2$.3f</string>
+    <string name="sensor_event_info">Update count: %1$d, Accuracy: %2$d</string>
 
 </resources>
