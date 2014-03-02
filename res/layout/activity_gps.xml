@@ -27,16 +27,11 @@
         android:id="@+id/gps_nmea"
         android:text="@string/gps_nmea"/>
 
-    <Button
-        android:id="@+id/request_location_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/request_location"
-        android:layout_marginTop="@dimen/activity_vertical_margin"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:id="@+id/gps_location_degree"
         android:text="@string/gps_location_degree"/>
 
@@ -51,5 +46,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/gps_location_seconds"
         android:text="@string/gps_location_seconds"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/gps_location_info"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:text="@string/gps_location_info"/>
 
 </LinearLayout>

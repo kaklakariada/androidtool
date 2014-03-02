@@ -34,13 +34,12 @@
     <string name="sensor_range">Resolution: %1$.5f, Max Range: %2$.3f</string>
     <string name="sensor_event_info">Update count: %1$d, Accuracy: %2$d</string>
     <string name="title_activity_gps">GPS</string>
-    <string name="gps_nmea">NMEA: \s</string>
-    <string name="gps_status">Current status: %1$s, found %2$d of %3$d satelites, time to first fix: %4$d ms</string>
+    <string name="gps_nmea">NMEA: %s</string>
+    <string name="gps_status">Status: %1$s\nFound %2$d of %6$d satellites\n%3$d used, %4$d with almanac, %5$d with ephermis\ntime to first fix: %7$d ms</string>
     <string name="gps_providers">All providers: %1$s\nEnabled providers: %2$s\nUsing best provider %3$s</string>
-    <string name="request_location">Request location update</string>
-    <string name="gps_location_degree">Longitude: %1$s, Latitude: %2$s</string>
-    <string name="gps_location_minutes">Longitude: %1$s, Latitude: %2$s</string>
-    <string name="gps_location_seconds">Longitude: %1$s, Latitude: %2$s</string>
-
+    <string name="gps_location_degree">Long: %1$s, Lat: %2$s degree</string>
+    <string name="gps_location_minutes">Long: %1$s, Lat: %2$s minutes</string>
+    <string name="gps_location_seconds">Long: %1$s, Lat: %2$s seconds</string>
+    <string name="gps_location_info">Num. satelites: %1$d, accuracy: %2$.1fm, altitude: %3$.1fm, bearing: %4$.1f°, speed: %5$.1f m/s, %6$.1f km/h</string>
 
 </resources>

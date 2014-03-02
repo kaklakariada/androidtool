@@ -12,8 +12,6 @@ import android.location.LocationProvider;
 import android.os.Bundle;
 import android.os.Looper;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import org.chris.android.tool.R;
@@ -36,21 +34,10 @@ public class GpsActivity extends Activity {
 
         statusListener = new GpsStatusListener();
         nmeaListener = new NmeaListener();
-
-        Button requestLocationButton = (Button) findViewById(R.id.request_location_button);
-        requestLocationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                requestLocationUpdate();
-            }
-        });
+        requestLocationUpdate();
     }
 
     private void requestLocationUpdate() {
-        final Looper looper = Looper.getMainLooper();
-        final Criteria criteria = new Criteria();
-        //criteria.setAccuracy(Criteria.ACCURACY_FINE);
-        //criteria.setVerticalAccuracy(Criteria.ACCURACY_FINE);
         final LocationListener listener = new LocationListener() {
             @Override
             public void onLocationChanged(final Location location) {
@@ -72,24 +59,24 @@ public class GpsActivity extends Activity {
                 LOG.info("Provider {} disabled");
             }
         };
-        LOG.info("Requesting single location update with criteria {}", criteria);
-        locationManager.requestSingleUpdate(criteria, listener, looper);
+
+        final String bestProviderName = getBestLocationProvider().getName();
+        //final String bestProviderName = LocationManager.NETWORK_PROVIDER;
+        LOG.info("Requesting location updates from best provider {}", bestProviderName);
+        //locationManager.requestSingleUpdate(bestProviderName, listener, looper);
+        locationManager.requestLocationUpdates(bestProviderName, 500, 0.01F, listener);
     }
 
     private void locationChanged(final Location location) {
         LOG.info("Got location update {}", location);
         int numberOfSatellites = location.getExtras() != null ? location.getExtras().getInt("satellites", 0) : 0;
-        final float speed = (location.getSpeed() * 60 * 60) / 1000F;
-        LOG.info("Satellites: {}, accuracy: {}m, altitude: {}m, bearing: {} degree, speed: {} km/h",
-                numberOfSatellites,
-                location.getAccuracy(), location.getAltitude(), location.getBearing(), speed);
-
-        final String latitudeDegree = getLatitude(location, Location.FORMAT_DEGREES);
-        final String longitudeDegree = getLongitude(location, Location.FORMAT_DEGREES);
+        final float speedKmH = (location.getSpeed() * 60 * 60) / 1000F;
 
         updateCoordinates(location, R.id.gps_location_degree, R.string.gps_location_degree, Location.FORMAT_DEGREES);
         updateCoordinates(location, R.id.gps_location_minutes, R.string.gps_location_minutes, Location.FORMAT_MINUTES);
         updateCoordinates(location, R.id.gps_location_seconds, R.string.gps_location_seconds, Location.FORMAT_SECONDS);
+        fillTextView(R.id.gps_location_info, R.string.gps_location_info, numberOfSatellites, location.getAccuracy(),
+                location.getAltitude(), location.getBearing(), location.getSpeed(), speedKmH);
     }
 
     private void updateCoordinates(final Location location, int viewId, final int textId, final int format) {
@@ -129,13 +116,15 @@ public class GpsActivity extends Activity {
         LOG.debug("Register gps status listeners");
         locationManager.addGpsStatusListener(statusListener);
         locationManager.addNmeaListener(nmeaListener);
+        fillTextView(R.id.gps_providers, R.string.gps_providers, locationManager.getAllProviders().toString(),
+                locationManager.getProviders(true), getBestLocationProvider().getName());
+    }
+
+    private LocationProvider getBestLocationProvider() {
         final Criteria criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_FINE);
         final String bestProvider = locationManager.getBestProvider(criteria, true);
-        fillTextView(R.id.gps_providers, R.string.gps_providers, locationManager.getAllProviders().toString(),
-                locationManager.getProviders(true), bestProvider);
-        final LocationProvider provider = locationManager.getProvider(bestProvider);
-
+        return locationManager.getProvider(bestProvider);
     }
 
     private class GpsStatusListener implements GpsStatus.Listener {
@@ -153,10 +142,23 @@ public class GpsActivity extends Activity {
 
     private void gpsStatusChanged(final GpsStatus status, final GpsStatusType gpsStatusType) {
         int numberOfSatellites = 0;
+        int numberOfUsedSatellites = 0;
+        int numberOfSatellitesWithAlmanac = 0;
+        int numberOfSatellitesWithEphermis = 0;
         for (GpsSatellite satellite : status.getSatellites()) {
             numberOfSatellites++;
+            if (satellite.usedInFix()) {
+                numberOfUsedSatellites++;
+            }
+            if (satellite.hasAlmanac()) {
+                numberOfSatellitesWithAlmanac++;
+            }
+            if (satellite.hasEphemeris()) {
+                numberOfSatellitesWithEphermis++;
+            }
         }
-        fillTextView(R.id.gps_status, R.string.gps_status, gpsStatusType, numberOfSatellites,
+        fillTextView(R.id.gps_status, R.string.gps_status, gpsStatusType, numberOfSatellites, numberOfUsedSatellites,
+                numberOfSatellitesWithAlmanac, numberOfSatellitesWithEphermis,
                 status.getMaxSatellites(), status.getTimeToFirstFix());
     }
 
