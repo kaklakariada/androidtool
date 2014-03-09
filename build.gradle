@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.8.+'
+        classpath 'com.android.tools.build:gradle:0.9.+'
     }
 }
 apply plugin: 'android'
@@ -14,14 +14,14 @@ repositories {
 
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
-    compile 'org.slf4j:slf4j-android:1.7.6'
+    compile 'org.slf4j:slf4j-api:1.7.6'
+    apk 'org.slf4j:slf4j-android:1.7.6'
     compile 'net.sf.marineapi:marineapi:0.7.0'
 }
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.0.2"
-
+    buildToolsVersion "19.0.3"
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -44,5 +44,13 @@ android {
         // by a similar customization.
         debug.setRoot('build-types/debug')
         release.setRoot('build-types/release')
+    }
+}
+
+allprojects {
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xlint:all"
+        }
     }
 }
