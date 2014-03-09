@@ -10,7 +10,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
-import android.os.Looper;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -23,7 +22,8 @@ public class GpsActivity extends Activity {
     private static final Logger LOG = LoggerFactory.getLogger(GpsActivity.class);
     private LocationManager locationManager;
     private GpsStatus.Listener statusListener;
-    private GpsStatus.NmeaListener nmeaListener;
+    private NmeaReader nmeaReader;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +32,7 @@ public class GpsActivity extends Activity {
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-        statusListener = new GpsStatusListener();
-        nmeaListener = new NmeaListener();
+        nmeaReader = new NmeaReader(locationManager);
         requestLocationUpdate();
     }
 
@@ -107,7 +106,7 @@ public class GpsActivity extends Activity {
     public void onPause() {
         super.onPause();
         locationManager.removeGpsStatusListener(statusListener);
-        locationManager.removeNmeaListener(nmeaListener);
+        nmeaReader.pause();
     }
 
     @Override
@@ -115,7 +114,7 @@ public class GpsActivity extends Activity {
         super.onResume();
         LOG.debug("Register gps status listeners");
         locationManager.addGpsStatusListener(statusListener);
-        locationManager.addNmeaListener(nmeaListener);
+        nmeaReader.resume();
         fillTextView(R.id.gps_providers, R.string.gps_providers, locationManager.getAllProviders().toString(),
                 locationManager.getProviders(true), getBestLocationProvider().getName());
     }
