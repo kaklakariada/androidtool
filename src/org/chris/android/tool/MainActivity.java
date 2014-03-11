@@ -91,7 +91,9 @@ public class MainActivity extends Activity {
 
     private String getLabelText(DataConnectionState state, DataConnectionNetworkType networkType) {
         String labelText;
-        if (state == DataConnectionState.CONNECTED) {
+        if (state == null) {
+            labelText = getResources().getString(R.string.mobile_data_state_unknown);
+        } else if (state == DataConnectionState.CONNECTED) {
             labelText = networkType.getLabel();
         } else {
             labelText = getResources().getString(state.getLabelTextId());

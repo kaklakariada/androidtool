@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.List;
 
 public class TorchHelper {
 
@@ -34,7 +35,13 @@ public class TorchHelper {
     }
 
     public boolean isFlashAvailable() {
-        return hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+        return hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH) && flashModeSupported(Parameters.FLASH_MODE_TORCH);
+    }
+
+    private boolean flashModeSupported(String flashMode) {
+        final List<String> supportedFlashModes = camera.getParameters().getSupportedFlashModes();
+        LOG.debug("Supported flash modes: {}", supportedFlashModes);
+        return supportedFlashModes.contains(flashMode);
     }
 
     private boolean hasSystemFeature(String feature) {
