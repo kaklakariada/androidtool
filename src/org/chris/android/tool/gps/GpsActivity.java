@@ -10,7 +10,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
-import android.os.Looper;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -23,7 +22,6 @@ public class GpsActivity extends Activity {
     private static final Logger LOG = LoggerFactory.getLogger(GpsActivity.class);
     private LocationManager locationManager;
     private GpsStatus.Listener statusListener;
-    private GpsStatus.NmeaListener nmeaListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +31,6 @@ public class GpsActivity extends Activity {
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         statusListener = new GpsStatusListener();
-        nmeaListener = new NmeaListener();
         requestLocationUpdate();
     }
 
@@ -61,9 +58,7 @@ public class GpsActivity extends Activity {
         };
 
         final String bestProviderName = getBestLocationProvider().getName();
-        //final String bestProviderName = LocationManager.NETWORK_PROVIDER;
         LOG.info("Requesting location updates from best provider {}", bestProviderName);
-        //locationManager.requestSingleUpdate(bestProviderName, listener, looper);
         locationManager.requestLocationUpdates(bestProviderName, 500, 0.01F, listener);
     }
 
@@ -106,16 +101,15 @@ public class GpsActivity extends Activity {
     @Override
     public void onPause() {
         super.onPause();
+        LOG.info("Remove gps status listener");
         locationManager.removeGpsStatusListener(statusListener);
-        locationManager.removeNmeaListener(nmeaListener);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        LOG.debug("Register gps status listeners");
+        LOG.info("Register gps status listeners");
         locationManager.addGpsStatusListener(statusListener);
-        locationManager.addNmeaListener(nmeaListener);
         fillTextView(R.id.gps_providers, R.string.gps_providers, locationManager.getAllProviders().toString(),
                 locationManager.getProviders(true), getBestLocationProvider().getName());
     }
@@ -128,16 +122,14 @@ public class GpsActivity extends Activity {
     }
 
     private class GpsStatusListener implements GpsStatus.Listener {
+        private GpsStatus currentGpsStatus = null;
         @Override
         public void onGpsStatusChanged(final int event) {
-            gpsStatusChanged(GpsStatusType.forId(event));
+            final GpsStatusType gpsStatus = GpsStatusType.forId(event);
+            currentGpsStatus = locationManager.getGpsStatus(currentGpsStatus);
+            LOG.debug("Gps status changed: {}, details: {}", gpsStatus, currentGpsStatus);
+            gpsStatusChanged(currentGpsStatus, gpsStatus);
         }
-    }
-
-    private void gpsStatusChanged(final GpsStatusType gpsStatus) {
-        GpsStatus currentGpsStatus = locationManager.getGpsStatus(null);
-        LOG.debug("Gps status changed: {}, details: {}", gpsStatus, currentGpsStatus);
-        gpsStatusChanged(currentGpsStatus, gpsStatus);
     }
 
     private void gpsStatusChanged(final GpsStatus status, final GpsStatusType gpsStatusType) {
@@ -160,13 +152,6 @@ public class GpsActivity extends Activity {
         fillTextView(R.id.gps_status, R.string.gps_status, gpsStatusType, numberOfSatellites, numberOfUsedSatellites,
                 numberOfSatellitesWithAlmanac, numberOfSatellitesWithEphermis,
                 status.getMaxSatellites(), status.getTimeToFirstFix());
-    }
-
-    private class NmeaListener implements GpsStatus.NmeaListener {
-        @Override
-        public void onNmeaReceived(final long timestamp, final String nmea) {
-            fillTextView(R.id.gps_nmea, R.string.gps_nmea, nmea);
-        }
     }
 
     private void fillTextView(int textViewId, int stringId, Object... formatArgs) {

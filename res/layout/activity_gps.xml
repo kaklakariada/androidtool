@@ -24,13 +24,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/gps_nmea"
-        android:text="@string/gps_nmea"/>
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:id="@+id/gps_location_degree"
         android:text="@string/gps_location_degree"/>
