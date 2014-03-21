@@ -74,6 +74,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.chris.android.tool.MainActivity"/>
         </activity>
+        <activity
+            android:name="org.chris.android.tool.gps.SelectDestinationActivity"
+            android:label="@string/gps_select_destination"
+            android:parentActivityName="org.chris.android.tool.gps.GpsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.chris.android.tool.gps.GpsActivity"/>
+        </activity>
     </application>
 
 </manifest>

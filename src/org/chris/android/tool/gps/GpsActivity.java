@@ -2,6 +2,7 @@ package org.chris.android.tool.gps;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Criteria;
 import android.location.GpsSatellite;
 import android.location.GpsStatus;
@@ -11,6 +12,8 @@ import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.chris.android.tool.R;
@@ -32,7 +35,20 @@ public class GpsActivity extends Activity {
 
         statusListener = new GpsStatusListener();
         requestLocationUpdate();
+        setupActivityButton(R.id.gps_select_destination, SelectDestinationActivity.class);
     }
+
+    private void setupActivityButton(int buttonId, final Class<? extends  Activity> activityClass) {
+        Button sensorButton = (Button) findViewById(buttonId);
+        sensorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GpsActivity.this, activityClass);
+                startActivity(intent);
+            }
+        });
+    }
+
 
     private void requestLocationUpdate() {
         final LocationListener listener = new LocationListener() {

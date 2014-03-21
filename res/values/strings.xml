@@ -41,5 +41,6 @@
     <string name="gps_location_minutes">Long: %1$s, Lat: %2$s minutes</string>
     <string name="gps_location_seconds">Long: %1$s, Lat: %2$s seconds</string>
     <string name="gps_location_info">Num. satellites: %1$d, accuracy: %2$.1fm, altitude: %3$.1fm, bearing: %4$.1f°, speed: %5$.1f m/s, %6$.1f km/h</string>
+    <string name="gps_select_destination">Select destination</string>
 
 </resources>
