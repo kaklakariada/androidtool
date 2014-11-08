@@ -41,7 +41,7 @@ public class SensorDetailActivity extends Activity {
     }
 
     private void createSensorDataGraph() {
-         sensorSeries = new GraphViewSeries(new GraphView.GraphViewData[0]);
+        sensorSeries = new GraphViewSeries(new GraphView.GraphViewData[0]);
 
         GraphView graphView = new LineGraphView(this, "Sensor data");
         graphView.addSeries(sensorSeries);
@@ -76,7 +76,8 @@ public class SensorDetailActivity extends Activity {
         Sensor sensor = sensorService.getSensor();
         fillTextView(R.id.sensor_name, R.string.sensor_name, sensor.getName());
         fillTextView(R.id.sensor_power, R.string.sensor_power, sensor.getPower());
-        fillTextView(R.id.sensor_type, R.string.sensor_type, SensorType.forId(sensor.getType()).name(),
+        SensorType sensorType = SensorType.forId(sensor.getType());
+        fillTextView(R.id.sensor_type, R.string.sensor_type, sensorType != null ? sensorType.name() : null,
                 sensor.getType());
         fillTextView(R.id.sensor_vendor, R.string.sensor_vendor, sensor.getVendor());
         fillTextView(R.id.sensor_version, R.string.sensor_version, sensor.getVersion());
@@ -89,6 +90,7 @@ public class SensorDetailActivity extends Activity {
     private void fillTextView(int textViewId, int stringId, Object... formatArgs) {
         fillTextView(textViewId, getString(stringId, formatArgs));
     }
+
     private void fillTextView(int textViewId, String value) {
         TextView text = (TextView) findViewById(textViewId);
         text.setText(value);

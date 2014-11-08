@@ -44,8 +44,8 @@ public class SensorListActivity extends ListActivity {
 
     private ListAdapter createListAdapter(List<Sensor> sensorList) {
         final List<? extends Map<String, ?>> data = createDataList(sensorList);
-        return new SimpleAdapter(getApplicationContext(), data, android.R.layout.two_line_list_item, new String[] {
-                COLUMN_SENSOR_NAME, COLUMN_SENSOR_DESCRIPTION }, new int[] { android.R.id.text1, android.R.id.text2 });
+        return new SimpleAdapter(getApplicationContext(), data, android.R.layout.two_line_list_item, new String[]{
+                COLUMN_SENSOR_NAME, COLUMN_SENSOR_DESCRIPTION}, new int[]{android.R.id.text1, android.R.id.text2});
     }
 
     private List<? extends Map<String, ?>> createDataList(List<Sensor> sensorList) {
@@ -61,13 +61,15 @@ public class SensorListActivity extends ListActivity {
         map.put(COLUMN_SENSOR_NAME, sensor.getName());
         map.put(COLUMN_SENSOR_VENDOR, sensor.getVendor());
         map.put(COLUMN_SENSOR_VERSION, sensor.getVersion());
-        map.put(COLUMN_SENSOR_TYPE, SensorType.forId(sensor.getType()).name());
+        SensorType sensorType = SensorType.forId(sensor.getType());
+        map.put(COLUMN_SENSOR_TYPE, sensorType != null ? sensorType.name() : null);
         map.put(COLUMN_SENSOR_DESCRIPTION, getDescription(sensor));
         return map;
     }
 
     private String getDescription(Sensor sensor) {
-        return getString(R.string.sensor_description, SensorType.forId(sensor.getType()).name(), sensor.getVendor(),
+        SensorType sensorType = SensorType.forId(sensor.getType());
+        return getString(R.string.sensor_description, sensorType != null ? sensorType.name() : null, sensor.getVendor(),
                 sensor.getPower());
     }
 
