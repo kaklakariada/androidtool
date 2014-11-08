@@ -98,7 +98,7 @@ public class MobileDataHelper {
     }
 
     private Class<?>[] getArgumentTypes(Object... args) {
-        final Class<?>[] argTypes = new Class[args.length];
+        final Class<?>[] argTypes = new Class<?>[args.length];
         for (int i = 0; i < args.length; i++) {
             argTypes[i] = args[i].getClass();
         }

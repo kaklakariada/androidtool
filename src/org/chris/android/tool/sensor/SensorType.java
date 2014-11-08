@@ -45,7 +45,7 @@ public enum SensorType {
 
     private final int state;
     private final static SparseArray<SensorType> states = new SparseArray<SensorType>();
-    // private final int labelTextId;
+
     private final boolean trigger;
 
     static {
