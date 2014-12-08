@@ -44,7 +44,7 @@ public enum SensorType {
     STEP_DETECTOR(Sensor.TYPE_STEP_DETECTOR, true);
 
     private final int state;
-    private final static SparseArray<SensorType> states = new SparseArray<SensorType>();
+    private final static SparseArray<SensorType> states = new SparseArray<>();
 
     private final boolean trigger;
 
@@ -59,11 +59,11 @@ public enum SensorType {
         this.trigger = trigger;
     }
 
+    public boolean isTrigger() {
+        return trigger;
+    }
+
     public static SensorType forId(int id) {
         return states.get(id);
     }
-
-    // public int getLabelTextId() {
-    // return labelTextId;
-    // }
 }

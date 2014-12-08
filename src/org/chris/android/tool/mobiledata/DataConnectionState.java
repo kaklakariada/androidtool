@@ -12,7 +12,7 @@ public enum DataConnectionState {
             TelephonyManager.DATA_CONNECTING, R.string.mobile_data_state_connecting, true), SUSPENDED(
             TelephonyManager.DATA_SUSPENDED, R.string.mobile_data_state_suspended, true);
     private final int state;
-    private final static SparseArray<DataConnectionState> states = new SparseArray<DataConnectionState>();
+    private final static SparseArray<DataConnectionState> states = new SparseArray<>();
     private final boolean connected;
     private final int labelTextId;
 

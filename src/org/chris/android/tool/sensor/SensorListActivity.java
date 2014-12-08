@@ -49,7 +49,7 @@ public class SensorListActivity extends ListActivity {
     }
 
     private List<? extends Map<String, ?>> createDataList(List<Sensor> sensorList) {
-        List<Map<String, ?>> data = new ArrayList<Map<String, ?>>(sensorList.size());
+        List<Map<String, ?>> data = new ArrayList<>(sensorList.size());
         for (final Sensor sensor : sensorList) {
             data.add(createDataMap(sensor));
         }
@@ -57,7 +57,7 @@ public class SensorListActivity extends ListActivity {
     }
 
     private Map<String, Object> createDataMap(Sensor sensor) {
-        final Map<String, Object> map = new HashMap<String, Object>();
+        final Map<String, Object> map = new HashMap<>();
         map.put(COLUMN_SENSOR_NAME, sensor.getName());
         map.put(COLUMN_SENSOR_VENDOR, sensor.getVendor());
         map.put(COLUMN_SENSOR_VERSION, sensor.getVersion());

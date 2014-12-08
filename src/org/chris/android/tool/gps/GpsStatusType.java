@@ -11,7 +11,7 @@ public enum GpsStatusType {
     GPS_EVENT_SATELLITE_STATUS(GpsStatus.GPS_EVENT_SATELLITE_STATUS);
 
     private final int state;
-    private final static SparseArray<GpsStatusType> states = new SparseArray<GpsStatusType>();
+    private final static SparseArray<GpsStatusType> states = new SparseArray<>();
 
     static {
         for (GpsStatusType val : values()) {

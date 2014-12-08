@@ -14,7 +14,7 @@ public enum DataConnectionNetworkType {
             TelephonyManager.NETWORK_TYPE_IDEN), LTE(TelephonyManager.NETWORK_TYPE_LTE), UMTS(
             TelephonyManager.NETWORK_TYPE_UMTS), UNKNOWN(TelephonyManager.NETWORK_TYPE_UNKNOWN);
     private final int state;
-    private final static SparseArray<DataConnectionNetworkType> states = new SparseArray<DataConnectionNetworkType>();
+    private final static SparseArray<DataConnectionNetworkType> states = new SparseArray<>();
 
     static {
         for (DataConnectionNetworkType val : values()) {

@@ -13,7 +13,7 @@ public enum WifiState {
     UNKNOWN(
             WifiManager.WIFI_STATE_UNKNOWN, R.string.wifi_state_unknown);
     private int state;
-    private final static SparseArray<WifiState> states = new SparseArray<WifiState>();
+    private final static SparseArray<WifiState> states = new SparseArray<>();
     private final int labelTextId;
 
     static {

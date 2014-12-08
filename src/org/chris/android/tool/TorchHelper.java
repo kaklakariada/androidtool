@@ -18,14 +18,12 @@ public class TorchHelper {
 
     private static final Logger LOG = LoggerFactory.getLogger(TorchHelper.class);
     private Camera camera;
-    private SurfaceHolder holder;
     private final Context context;
 
     private TorchHelper(Context context, Camera camera, final SurfaceHolder holder) {
         this.context = context;
         this.camera = camera;
-        this.holder = holder;
-        this.holder.addCallback(new PreviewCallback());
+        holder.addCallback(new PreviewCallback());
     }
 
     public static TorchHelper create(Context context, SurfaceView preview) {

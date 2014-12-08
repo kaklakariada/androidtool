@@ -64,7 +64,7 @@ public class SensorDetailActivity extends Activity {
     }
 
     private String formatSensorValues(final float[] values) {
-        StringBuffer b = new StringBuffer();
+        StringBuilder b = new StringBuilder();
         for (float value : values) {
             b.append(String.format(Locale.getDefault(), "%1.5f", value));
             b.append('\n');
@@ -100,7 +100,9 @@ public class SensorDetailActivity extends Activity {
      * Set up the {@link android.app.ActionBar}.
      */
     private void setupActionBar() {
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getActionBar() != null) {
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override

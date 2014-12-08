@@ -76,7 +76,7 @@ public class SelectDestinationActivity extends Activity {
         ListPopupWindow popup = new ListPopupWindow(this);
         popup.setAnchorView(findViewById(R.id.destination_search_text));
 
-        ListAdapter adapter = new ArrayAdapter<Address>(getApplicationContext(),
+        ListAdapter adapter = new ArrayAdapter<>(getApplicationContext(),
                 android.R.layout.simple_dropdown_item_1line, addresses);
         popup.setAdapter(adapter);
 
