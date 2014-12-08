@@ -2,6 +2,7 @@ package org.chris.android.tool.mobiledata;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.os.Build;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 
@@ -44,7 +45,7 @@ public class MobileDataHelper {
     public void setMobileDataEnabled(boolean enabled) {
         LOG.info("Set mobile data enabled to {}", enabled);
         final Object iConnectivityManager = getConnectivityManager();
-        invokePrivateMethod(iConnectivityManager, "setMobileDataEnabled", new Class<?>[] { Boolean.TYPE }, enabled);
+        invokePrivateMethod(iConnectivityManager, "setMobileDataEnabled", new Class<?>[]{Boolean.TYPE}, enabled);
         LOG.debug("success");
     }
 
@@ -58,13 +59,7 @@ public class MobileDataHelper {
             Field field = target.getClass().getDeclaredField(fieldName);
             field.setAccessible(true);
             return field.get(target);
-        } catch (NoSuchFieldException e) {
-            throw new RuntimeException("Error getting field " + fieldName + " of target " + target + " of type "
-                    + target.getClass().getName(), e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException("Error getting field " + fieldName + " of target " + target + " of type "
-                    + target.getClass().getName(), e);
-        } catch (IllegalArgumentException e) {
+        } catch (NoSuchFieldException | IllegalAccessException | IllegalArgumentException e) {
             throw new RuntimeException("Error getting field " + fieldName + " of target " + target + " of type "
                     + target.getClass().getName(), e);
         }
@@ -82,16 +77,7 @@ public class MobileDataHelper {
             Object returnValue = method.invoke(target, args);
             LOG.debug("Got return value " + returnValue + " from method call " + methodName);
             return returnValue;
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException("Error invoking method " + methodName + " with arguments "
-                    + Arrays.toString(argTypes) + " on object " + target + " of type " + target.getClass().getName(), e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException("Error invoking method " + methodName + " with arguments "
-                    + Arrays.toString(argTypes) + " on object " + target + " of type " + target.getClass().getName(), e);
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException("Error invoking method " + methodName + " with arguments "
-                    + Arrays.toString(argTypes) + " on object " + target + " of type " + target.getClass().getName(), e);
-        } catch (InvocationTargetException e) {
+        } catch (NoSuchMethodException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             throw new RuntimeException("Error invoking method " + methodName + " with arguments "
                     + Arrays.toString(argTypes) + " on object " + target + " of type " + target.getClass().getName(), e);
         }
@@ -106,6 +92,10 @@ public class MobileDataHelper {
             LOG.debug("Arguments {} have type {}", Arrays.toString(args), Arrays.toString(argTypes));
         }
         return argTypes;
+    }
+
+    public boolean isAvailable() {
+        return Build.VERSION.SDK_INT < 21;
     }
 
     public interface DataConnectionStateListener {

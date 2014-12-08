@@ -72,6 +72,11 @@ public class MainActivity extends Activity {
 
     private void setupMobileDataSwitch() {
         Switch mobileDataSwitch = (Switch) findViewById(R.id.mobile_data_switch);
+        if(!mobileDataHelper.isAvailable()){
+           LOG.info("Mobile data settings not available with this phone");
+            mobileDataSwitch.setEnabled(false);
+            return;
+        }
         mobileDataSwitch.setChecked(mobileDataHelper.isMobileDataEnabled());
         mobileDataSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
