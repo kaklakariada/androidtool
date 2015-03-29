@@ -3,5 +3,4 @@ gen
 local.properties
 .gradle
 build
-.idea
-
+.idea/libraries
