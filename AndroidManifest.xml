@@ -34,6 +34,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <!--
         <activity
             android:name="org.chris.android.tool.nfc.NfcActivity"
             android:label="@string/title_activity_nfc">
@@ -55,6 +56,7 @@
                 android:name="android.nfc.action.TECH_DISCOVERED"
                 android:resource="@xml/nfc_tech_list"/>
         </activity>
+        -->
         <activity
             android:name="org.chris.android.tool.sensor.SensorListActivity"
             android:label="@string/title_activity_sensors"
